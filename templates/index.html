@@ -6,35 +6,41 @@
 
 {% block body %}
     <h1>AI Assistant</h1>
-    <textarea id="message" placeholder="Type your message here"></textarea>
-    <button onclick="sendMessage()">Send</button>
-    <div id="response"></div>
+    <textarea id="message" placeholder="Type your message here" cols="50"></textarea>
+    <button type="submit">Send</button>
+    <pre id="body"></pre>
 
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-        async function sendMessage() {
-            const message = document.getElementById("message").value;
-            const responseDiv = document.getElementById("response");
+        const body = document.getElementById('body');
+        const submit_button = document.querySelector('button');
+        const message = document.getElementById('message');
 
-            try {
-                const response = await fetch("http://127.0.0.1:5000/", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ message }),
-                });
+        submit_button.addEventListener("click", async(e) => {
+            e.preventDefault();
 
-                const data = await response.json();
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({message: message.value})
+            });
 
-                if (data.response) {
-                    responseDiv.textContent = data.response;
-                } else {
-                    responseDiv.textContent = "Error: ${data.error}";
+            const reader = response.body.getReader();
+            let output = '';
+
+            while (true) {
+                const {done, value} = await reader.read();
+                
+                output += new TextDecoder().decode(value);
+
+                body.innerHTML = marked.parse(output);
+
+                if (done) {
+                    return;
                 }
-
-            } catch (error) {
-                responseDiv.textContent = "Error: ${error.message}";
             }
-        }
+        });
     </script>
 {% endblock %}
