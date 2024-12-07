@@ -7,4 +7,4 @@ All the necessary packages are listed in the requirements.txt file
 
 Install all the packages in the file with:
 
-            xxxxxxxxxxxxx
+            pip install -r .\requirements.txt
