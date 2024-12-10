@@ -1,6 +1,7 @@
 body {
     margin: 0;
     font-family: sans-serif;
+    /* Sets background */
     background: #e3f2fd
 }
 
@@ -13,6 +14,7 @@ body {
     box-sizing: border-box;
 }
 
+/** Styling of the chatbox */
 .chatbot {
     position: fixed;
     width: 420px;
@@ -25,6 +27,7 @@ body {
                 0 32px 64px -48px rgba(0, 0, 0, 0.5);
 }
 
+/** Styling of the chatbox header */
 .chatbot header {
     background: #724ae8;
     text-align: center;
@@ -35,7 +38,7 @@ body {
     color: #fff;
     font-size: 1.4rem;
 }
-
+/** Styling of the chatbox body */
 .chatbot .chatbox {
     height: 510px;
     overflow-y: auto;
@@ -45,7 +48,7 @@ body {
 .chatbox .chat {
     display: flex;
 }
-
+/** Styling of the ai icon */
 .chatbox .incoming span {
     height: 32px;
     width: 32px;
@@ -55,12 +58,12 @@ body {
     line-height: 32px;
     border-radius: 4px;
 }
-
+/** Styling of the chatbox messages */
 .chatbox .outgoing {
     margin: 20px 0;
     justify-content: flex-end;
 }
-
+/** Styling of the user messages */
 .chatbox .chat p {
     color: #fff;
     max-width: 75%;
@@ -69,13 +72,13 @@ body {
     border-radius: 10px 10px 0 10px;
     background: #724ae8;
 }
-
+/** Styling of the ai messages */
 .chatbox .incoming p {
     color: #000;
     background: #f2f2f2;
     border-radius: 10px 10px 10px 0;
 }
-
+/** Styling of the chatbot input */
 .chatbot .chat-input {
     position: absolute;
     bottom: 0;
@@ -85,7 +88,7 @@ body {
     padding: 5px 20px;
     gap: 5px;
 }
-
+/** Styling of the textarea */
 .chat-input textarea {
     border: none;
     outline: none;
@@ -95,7 +98,7 @@ body {
     height: 55px;
     width: 100%;
 }
-
+/** Styling of the send button */
 .chat-input span {
     color: #724ae8;
     cursor: pointer;

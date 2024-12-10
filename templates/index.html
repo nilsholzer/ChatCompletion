@@ -31,7 +31,7 @@
         const message = document.getElementById('input');
         const chatbox = document.querySelector('.chatbox');
 
-        // Create a new chat li element with passed message and class name
+        // Create a new chat list element with passed message and class name
         const createChatLi = (message, className) => {
                 const chatLi = document.createElement('li');
                 chatLi.classList.add('chat', className);
@@ -40,18 +40,25 @@
                 return chatLi;
             };
 
+        // Creates the chatbox for input message from user
         const handleOutChat = () => {
             userMessage = message.value;
             chatbox.appendChild(createChatLi(userMessage, 'outgoing'));
+
+            setTimeout(() => {
+            }, 2000);
         }
 
+        //Creates the chatbox for output message from chatbot
         const handleInChat = (message) => {
             chatbox.appendChild(createChatLi(message, 'incoming'));
         }
-
+    
+        // Event listener for submit button
         submit_button.addEventListener("click", async(e) => {
             e.preventDefault();
 
+            //Get the ai response from the backend
             const response = await fetch('/chat', {
                 method: 'POST',
                 headers: {
@@ -59,10 +66,12 @@
                 },
                 body: JSON.stringify({message: message.value})
             });
+
             handleOutChat();
             const reader = response.body.getReader();
             let output = '';
 
+            // Read the partial response from the backend
             while (true) {
                 const {done, value} = await reader.read();
                 
