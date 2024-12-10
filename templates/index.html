@@ -43,4 +43,25 @@
             }
         });
     </script>
+
+    <div class="chatbot">
+        <header>
+            <h2>Chatbot</h2>
+        </header>
+        <ul class="chatbox">
+            <li class="chat incoming">
+                <span class="material-symbols-outlined">smart_toy</span>
+                <p>Hi! I'm a chatbot. How can I help you today?</p>
+            </li>
+            <li class="chat outgoing">
+                <span class="material-symbols-outlined">smart_toy</span>
+                <p>This is the outgoing chat</p>
+            </li>
+        </ul>
+
+        <div class="chat-input">
+            <textarea placeholder="Enter a message..."></textarea>
+            <span id="send-btn" class="material-symbols-outlined">send</span>
+        </div>
+    </div>
 {% endblock %}
