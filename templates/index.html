@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-
+<!-- <pre id="body"></pre>  -->>
     <div class="chatbot">
         <header>
             <h2>Chatbot</h2>
@@ -26,6 +26,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
+        //const body = document.getElementById('body');
         const submit_button = document.querySelector(".chat-input span");
         const message = document.getElementById('input');
         const chatbox = document.querySelector('.chatbox');
@@ -66,6 +67,8 @@
                 const {done, value} = await reader.read();
                 
                 output += new TextDecoder().decode(value);
+
+                //body.innerHTML = marked.parse(output);
 
                 if (done) {
                     break;
