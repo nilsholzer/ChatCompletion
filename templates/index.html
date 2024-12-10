@@ -5,16 +5,48 @@
 {% endblock %}
 
 {% block body %}
-    <h1>AI Assistant</h1>
-    <textarea id="message" placeholder="Type your message here" cols="50"></textarea>
-    <button type="submit">Send</button>
-    <pre id="body"></pre>
+
+    <div class="chatbot">
+        <header>
+            <h2>Chatbot</h2>
+        </header>
+        <ul class="chatbox">
+            <li class="chat incoming">
+                <span class="material-symbols-outlined">smart_toy</span>
+                <p>Hi! I'm a chatbot. How can I help you today?</p>
+            </li>
+        </ul>
+
+        <div class="chat-input">
+            <textarea id = "input" placeholder="Enter a message..."></textarea>
+            <span id="send-btn" class="material-symbols-outlined">send</span>
+        </div>
+    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-        const body = document.getElementById('body');
-        const submit_button = document.querySelector('button');
-        const message = document.getElementById('message');
+        const submit_button = document.querySelector(".chat-input span");
+        const message = document.getElementById('input');
+        const chatbox = document.querySelector('.chatbox');
+
+        // Create a new chat li element with passed message and class name
+        const createChatLi = (message, className) => {
+                const chatLi = document.createElement('li');
+                chatLi.classList.add('chat', className);
+                let chatContent = className === 'outgoing' ? `<p>${message}</p>` : `<span class="material-symbols-outlined">smart_toy</span><p>${message}</p>`;
+                chatLi.innerHTML = chatContent;
+                return chatLi;
+            };
+
+        const handleOutChat = () => {
+            userMessage = message.value;
+            chatbox.appendChild(createChatLi(userMessage, 'outgoing'));
+        }
+
+        const handleInChat = (message) => {
+            chatbox.appendChild(createChatLi(message, 'incoming'));
+        }
 
         submit_button.addEventListener("click", async(e) => {
             e.preventDefault();
@@ -26,7 +58,7 @@
                 },
                 body: JSON.stringify({message: message.value})
             });
-
+            handleOutChat();
             const reader = response.body.getReader();
             let output = '';
 
@@ -35,33 +67,12 @@
                 
                 output += new TextDecoder().decode(value);
 
-                body.innerHTML = marked.parse(output);
-
                 if (done) {
-                    return;
+                    break;
                 }
             }
+
+            handleInChat(output);
         });
     </script>
-
-    <div class="chatbot">
-        <header>
-            <h2>Chatbot</h2>
-        </header>
-        <ul class="chatbox">
-            <li class="chat incoming">
-                <span class="material-symbols-outlined">smart_toy</span>
-                <p>Hi! I'm a chatbot. How can I help you today?</p>
-            </li>
-            <li class="chat outgoing">
-                <span class="material-symbols-outlined">smart_toy</span>
-                <p>This is the outgoing chat</p>
-            </li>
-        </ul>
-
-        <div class="chat-input">
-            <textarea placeholder="Enter a message..."></textarea>
-            <span id="send-btn" class="material-symbols-outlined">send</span>
-        </div>
-    </div>
 {% endblock %}
