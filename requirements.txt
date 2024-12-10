@@ -1,3 +1,2 @@
-# This file lists all the dependencies that the project needs to run
-
 Flask==3.1.0
+openai==1.57.1
